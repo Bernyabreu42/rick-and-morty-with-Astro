@@ -1,0 +1,27 @@
+---
+import SectionContainer from "./SectionContainer.astro";
+---
+
+
+<SectionContainer tailwindClass="px-5 pt-20 pb-10">
+    <div class="mx-auto max-w-xl  text-center">
+      <h1 class="text-3xl font-extrabold sm:text-4xl">
+        Explore the Multiverse of
+        <strong class="font-extrabold text-text sm:block"> Rick and Morty. </strong>
+      </h1>
+
+      <p class="mt-4 sm:text-xl/relaxed">
+        Find your Favorite Characters in Any Dimension
+      </p>
+
+      <a href="/characters" >
+        <input
+
+          id="character"
+          placeholder="¡Wubba Lubba Dub Dub!"
+          type="text"
+          class="mt-1 w-full rounded-md border-gray-200 shadow-sm sm:text-sm p-3 text-black outline-none"
+        />
+      </a>
+    </div>
+</SectionContainer>

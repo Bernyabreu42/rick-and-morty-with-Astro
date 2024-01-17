@@ -1,0 +1,152 @@
+---
+interface Props {
+  page?: string,
+}
+
+const { page } = Astro.props
+
+const listPages = [
+  {page: '/characters', title: 'Characters',  status: false},
+  {page: '/locations', title: 'Locations',  status: false},
+  {page: '/episodes', title: 'Episodes',  status: false}
+]
+
+const newArray = []
+
+listPages.filter(item => {
+
+  if (item.page === page) {
+    newArray.push({ page, ...item, status: true, })
+  } else if (item.page !== page) {
+    newArray.push({ ...item, status: false })
+  }
+
+  return newArray
+})
+
+---
+
+<header transition:animate="none" class="sticky top-0 left-0 w-full z-50 bg-fondo border-b border-gray-700">
+  <nav class="overflow-hidden max-w-5xl m-auto flex items-center justify-between px-5 h-[4.5rem]">
+    <a href="/" class="flex items-center group hover:hover:text-text" title="Rick and morty">
+      <img src='/svg/location.svg' class="w-9">
+      <p class="font-bold text-xl sm:text-2xl ml-1">
+        Rick<span class="text-xs group-hover:text-[#fbf976]" > and </span>Morty
+      </p>
+
+    </a>
+    <ul class="sm:flex items-center gap-3 text-lg font-semibold hidden">
+
+      {
+        newArray.map(({ page, title, status}) => {
+          return (
+          <li>
+          {
+            status
+            ? <a href={page} class="text-text" aria-current="page">{title}</a>
+            : <a href={page} class="hover:text-text">{title}</a>
+          }
+          </li>
+          )
+        })
+      }
+      <li class="border border-gray-700 hover:bg-gray-800 rounded-md">
+        <a href="https://github.com/Bernyabreu42/rick-and-morty-with-Astro" target="_blank"><img src="/svg/github.svg" alt="" class="w-9 h-9 p-2 "></a>
+      </li>
+    </ul>
+
+    <ul class="flex items-center gap-3 sm:hidden">
+      <li class="border border-gray-700 hover:bg-gray-800 rounded-md">
+        <a href="https://github.com/Bernyabreu42/rick-and-morty-with-Astro" target="_blank" ><img src="/svg/github.svg" alt="" class="w-9 h-9 p-2 "></a>
+      </li>
+      <li class="border border-gray-700 hover:bg-gray-800 rounded-md">
+        <details>
+          <div>
+            <ul class="flex flex-col items-center text-lg font-semibold divide-y divide-gray-800 bg-fondo">
+              <li class="w-full p-3 text-center"><a href="/characters" class="hover:text-text ">characters</a></li>
+              <li class="w-full p-3 text-center"><a href="/locations" class="hover:text-text">locations</a></li>
+              <li class="w-full p-3 text-center"><a href="/episodes" class="hover:text-text">episodes</a></li>
+              <li class="w-full p-3 ">
+              <span class="flex items-center justify-between border border-gray-700 p-1 px-5 text-xs rounded-full focus-within:bg-gray-800">
+                <a href="/characters"><input type="text" placeholder="search..." class="bg-transparent outline-none"></a>
+                <img src="/svg/search.svg" alt="" class="w-8 h-8 p-2 ">
+              </span>
+             </li>
+            </ul>
+          </div>
+
+
+           <summary>
+            <img src="/svg/menu.svg" alt="" class="w-9 h-9 p-2 icono-menu">
+            <img src="/svg/close.svg" alt="" class="w-9 h-9 p-2 icono-close hidden">
+           </summary>
+
+         </details>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+
+
+
+<style>
+
+   details div {
+    position: fixed;
+    top: 4rem;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+    background-color: #00000037;
+  }
+
+  details[open] ul{
+    animation: slideDown 0.3s ease;
+  }
+
+  details[open] .icono-menu {
+      display: none;
+  }
+
+  details[open] .icono-close {
+      display: flex;
+  }
+
+  /* details[open] .icono-close {
+      display: flex;
+  } */
+
+  details ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    padding:  0.5rem;
+  }
+
+  details summary {
+    position: relative;
+    list-style: none;
+    order: 2;
+  }
+
+  details summary::webkit-details-marker {
+    display: none;
+    visibility: hidden;
+  }
+
+  @keyframes slideDown {
+    from {
+          transform: translateY(-100%);
+      }
+      to {
+          transform: translateY(0);
+      }
+  }
+
+</style>

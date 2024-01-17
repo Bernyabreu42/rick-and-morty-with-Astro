@@ -1,0 +1,29 @@
+---
+import Banner from '../components/Banner.astro';
+import CharacterView from '../components/CharacterView.astro';
+import SectionContainer from '../components/SectionContainer.astro';
+import Layout from '../layouts/Layout.astro';
+import type { Character } from '../types/Character';
+
+
+const charactersResponse = await fetch('https://rickandmortyapi.com/api/character/?page=1')
+const {results} = await charactersResponse.json()
+
+const ListCharacter = results as Character[]
+
+
+
+---
+
+<Layout title="Welcome to the universe of rick and morty." page='/'>
+  <Banner />
+  <SectionContainer tailwindClass='responsive-grid pb-10'>
+    {
+      ListCharacter.map(character => (
+        <CharacterView character={character} />
+      ))
+    }
+  </SectionContainer>
+</Layout>
+
+

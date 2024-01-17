@@ -1,0 +1,12 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Searcher from '../../components/preact/Searcher'
+---
+
+
+<Layout title='Locations' page='/locations'>
+
+    <Searcher client:load api="location" placeholder='There are an infinite number of realities'  />
+    <!-- {locations.map(location => <LocationCard location={location} />)} -->
+
+</Layout>

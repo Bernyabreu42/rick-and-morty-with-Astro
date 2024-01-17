@@ -1,0 +1,108 @@
+---
+
+
+import Layout from "../../layouts/Layout.astro"
+import type { Character } from "../../types/Character";
+import SectionContainer from "../../components/SectionContainer.astro";
+import Pagination from "../../components/preact/Pagination";
+import { ExtraerIds } from "../../helper";
+
+// Función para obtener todos los personajes de forma recursiva
+export async function getStaticPaths() {
+  const charactersResponse = await fetch('https://rickandmortyapi.com/api/character')
+  const { info } = await charactersResponse.json()
+
+  const allCharacter = Array.from({ length: info.count }, (_, index) => ({
+  params: {
+    id: (index + 1).toString(),
+  }
+}));
+
+  return allCharacter
+}
+
+  const { id } = Astro.params
+  const responseCharacter = await fetch(`https://rickandmortyapi.com/api/character/${id}`)
+  const character = await responseCharacter.json() as Character
+
+  const idLocation = ExtraerIds({urls: [character.location.url], text: 'location'})
+
+---
+
+<Layout title={character.name} page="/characters">
+
+  <SectionContainer tailwindClass="py-5 pb-10">
+
+    <Pagination client:visible currentCharacterId={character.id} />
+    <br>
+
+    <div class="sm:bg-fondo sm:border border-gray-700 sm:p-3 shadow-sm sm:rounded-md overflow-hidden ">
+
+      <h3 class="text-2xl font-bold mb-3">Character information</h3>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+
+        <div  class="w-full sm:w-[300px]  rounded-lg overflow-hidden shadow-sm border border-gray-700">
+            <picture class="relative" transition:name={`character ${character.id}`}>
+              <img id="character-picture" src={character.image} alt={character.name} class="h-full object-cover">
+            </picture>
+          </div>
+
+          <div class="flex-1">
+
+             <h3 class="text-2xl font-bold">{character.name}</h3>
+
+             <ul class="mt-3 bg-primary border border-gray-700 divide-y divide-gray-700 rounded-md overflow-hidden">
+               <li class="p-3 ">
+                 <span class="font-bold text-text">Created: </span>
+                 <time datetime= {new Date(character.created).toLocaleDateString()}>
+                   {new Date(character.created).toLocaleDateString()}
+                  </time>
+                </li>
+               <li class="p-3 ">
+                 <span class="font-bold text-text">Origen: </span>
+                 <span>{character.origin.name}</span>
+                </li>
+               <li class="p-3 flex items-center justify-between divide-x divide-gray-700">
+                <div>
+                 <span class="font-bold text-text">Location: </span>
+                 <span>
+                   <a href={`/locations/${idLocation}`} class="underline hover:text-[#fbf976]">
+                     {character.location.name}
+                   </a>
+                 </span>
+                </div>
+                </li>
+               <li class="p-3">
+                  <span class="font-bold text-text">Status: </span>
+                  <span>{character.status}</span>
+                </li>
+                <li class="p-3 ">
+                  <span class="font-bold text-text">Species: </span>
+                  <span>{character.species}</span>
+                </li>
+               <li class="p-3">
+                 <span class="font-bold text-text">Type: </span>
+                 <span>{character.type || '?'}</span>
+                </li>
+
+             </ul>
+
+           </div>
+
+      </div>
+
+
+    </div>
+
+
+  </SectionContainer>
+
+
+</Layout>
+
+<style>
+   picture #character-picture{
+    width: 100% !important;
+  }
+</style>

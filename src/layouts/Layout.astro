@@ -1,0 +1,105 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Menu from '../components/Menu.astro';
+
+interface Props {
+	title: string;
+	page: string
+}
+
+const { title, page } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="svg/location.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ViewTransitions fallback='none' />
+	</head>
+	<body class="scroll-custom">
+			<Menu page={page} />
+		<main>
+			<slot/>
+		</main>
+
+	</body>
+</html>
+
+<style is:global >
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+
+	.scroll-none::-webkit-scrollbar{
+		display: none;
+	}
+
+	.scroll-custom::-webkit-scrollbar{
+		background-color: #0e141f;
+		width: 5px;
+		height: 5px;
+	}
+
+	.scroll-custom::-webkit-scrollbar-thumb{
+		background-color: #3bc764;
+		border-radius: 10rem;
+	}
+
+	body{
+		position: relative;
+		scroll-behavior: smooth;
+		overflow: scroll;
+	}
+
+	.responsive-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+    gap: 1rem;
+
+		@media (max-width: 480px){
+			grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+		}
+  }
+
+	html {
+		font-family: system-ui, sans-serif;
+		background: #090d15;
+		background-size: 224px;
+		color: #fff;
+	}
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+
+  #locations:hover #name-locations{
+    color: #3bc764
+  }
+
+  #episodes:hover #name-episode{
+    color: #fbf976
+  }
+
+
+
+</style>

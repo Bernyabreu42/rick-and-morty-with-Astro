@@ -1,0 +1,16 @@
+---
+import SectionContainer from "../components/SectionContainer.astro";
+import Layout from "../layouts/Layout.astro";
+
+---
+
+
+<Layout title="404 - Page not found" page="/">
+  <SectionContainer tailwindClass="grid place-content-center py-16">
+    <img src="/img/404.png" alt="" class="w-80 object-cover rounded-lg overflow-hidden">
+    <div class="text-center">
+      <span class="text-8xl text-text font-bold">404</span>
+      <h2 class="font-semibold text-xl ml-5">Page not Found</h2>
+    </div>
+  </SectionContainer>
+</Layout>

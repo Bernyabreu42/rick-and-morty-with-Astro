@@ -1,0 +1,17 @@
+---
+export interface Props {
+  tailwindClass?:string
+  sectionTailwindClass?:string
+}
+
+const { tailwindClass, sectionTailwindClass } = Astro.props
+---
+
+
+<section class={sectionTailwindClass}>
+
+  <div class={`overflow-hidden max-w-5xl px-5 m-auto ${tailwindClass} `}>
+    <slot/>
+  </div>
+
+</section>

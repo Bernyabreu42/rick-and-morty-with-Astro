@@ -1,0 +1,65 @@
+---
+import CharacterView from '../../components/CharacterView.astro';
+import SectionContainer from '../../components/SectionContainer.astro';
+import { ExtraerIds } from '../../helper';
+import Layout from '../../layouts/Layout.astro';
+import type { Character } from '../../types/Character';
+import type { Location } from '../../types/Location';
+
+export async function getStaticPaths() {
+  const locationsResponse = await fetch('https://rickandmortyapi.com/api/location')
+  const { info } = await locationsResponse.json()
+
+  const allLocations = Array.from({ length: info.count }, (_, index) => ({
+  params: {
+    id: (index + 1).toString(),
+  }
+}));
+
+  return allLocations
+}
+
+  const { id } = Astro.params
+  const responseLocations = await fetch(`https://rickandmortyapi.com/api/location/${id}`)
+  const locationData = await responseLocations.json() as Location
+  const resultLocation = locationData as Location
+  let dataCharacter: Character[] = [];
+
+  if(resultLocation.residents.length){
+    const allResidents = ExtraerIds({urls: resultLocation.residents, text:'character'})
+    const responseCharacter = await fetch(`https://rickandmortyapi.com/api/character/${allResidents}`)
+    dataCharacter = await responseCharacter.json() as Character[]
+
+  }
+
+
+---
+
+
+<Layout title={resultLocation.name} page='/locations'>
+
+  <SectionContainer tailwindClass='py-10'>
+    <span class="text-[#fbf976]">{resultLocation.type}</span>
+    <h2 class="text-2xl font-bold text-text">
+      {resultLocation.name}
+    </h2>
+    <span>{resultLocation.dimension}</span>
+
+
+    <h3 class="text-2xl font-boldxt mt-5 mb-2">
+      <span>{resultLocation.residents.length} </span>
+      Residents
+    </h3>
+   <ul class="responsive-grid">
+       {
+      Array.isArray(dataCharacter)
+      ? dataCharacter.map(character => (
+        <li><CharacterView character={character} /></li>
+      ))
+      :  <li><CharacterView character={dataCharacter} /></li>
+    }
+   </ul>
+  </SectionContainer>
+
+</Layout>
+

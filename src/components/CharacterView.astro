@@ -1,0 +1,44 @@
+---
+import type { Character } from "../types/Character"
+
+export interface Props {
+  character: Character
+  tailwindClass?: string
+}
+
+const { character, tailwindClass = 'hover:scale-95 transition hover:shadow-text' } = Astro.props
+
+const statusColor = {
+  Alive: {background: '#cff09e', text: '#507c5c'},
+  Dead: {background: '#f4b2b0', text: '#b3404a'},
+  Unknown: {background:'#cee8fa', text: '#2d527c'},
+  unknown: {background:'#cee8fa', text: '#2d527c'}
+}
+
+---
+
+<a  href={`/characters/${character.id}`}
+class={`relative block rounded-lg overflow-hidden shadow-sm border border-gray-700 hover:bg-fondo h-full ${tailwindClass}`}>
+
+  <picture  class="relative aspect-square w-full h-auto">
+    <div style={`border:1px solid ${statusColor[character.status]['text']};background:${statusColor[character.status]['background']};color:${statusColor[character.status]['text']}`}
+    class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold flex items-center justify-center border">
+      <span>{character.status}</span>
+    </div>
+    <img id="character-picture" src={character.image} alt={character.name}>
+  </picture>
+
+  <div class="p-2 flex flex-col gap-1">
+    <time datetime={new Date(character.created).toLocaleDateString()} class="block text-xs text-gray-500">
+      {new Date(character.created).toLocaleDateString()}
+     </time>
+     <h3 class="text-xs sm:text-base">{character.name}</h3>
+  </div>
+
+</a>
+
+<style>
+  picture #character-picture{
+    width: 100% !important;
+  }
+</style>
