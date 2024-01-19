@@ -6,6 +6,8 @@ import Layout from '../../layouts/Layout.astro';
 import type { Character } from '../../types/Character';
 import type { Episode } from '../../types/Episode';
 
+const base = import.meta.env.BASE_URL
+
 export async function getStaticPaths() {
   const locationsResponse = await fetch('https://rickandmortyapi.com/api/episode')
   const { info } = await locationsResponse.json()
@@ -35,7 +37,7 @@ export async function getStaticPaths() {
 ---
 
 
-<Layout title={resulEpisode.name} page="/episodes">
+<Layout title={resulEpisode.name} page={`${base}/episodes`}>
 
   <SectionContainer tailwindClass='py-10'>
     <span class="text-text">{resulEpisode.air_date}</span>

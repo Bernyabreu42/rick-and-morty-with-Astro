@@ -1,10 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import Searcher from '../../components/preact/Searcher'
+
+const base = import.meta.env.BASE_URL
 ---
 
 
-<Layout title='Locations' page='/locations'>
+<Layout title='Locations' page={`${base}/locations`}>
 
     <Searcher client:load api="location" placeholder='There are an infinite number of realities'  />
     <!-- {locations.map(location => <LocationCard location={location} />)} -->
