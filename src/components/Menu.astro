@@ -16,17 +16,14 @@ const listPages = [
 const newArray = []
 
 listPages.filter(item => {
-
-  if (item.page === page) {
+  if (item.page === `${base}${page}`) {
     newArray.push({ page, ...item, status: true, })
-  } else if (item.page !== page) {
+  } else if (item.page !== `${base}${page}`) {
     newArray.push({ ...item, status: false })
   }
 
   return newArray
 })
-
-
 ---
 
 <header transition:animate="none" class="sticky top-0 left-0 w-full z-50 bg-fondo border-b border-gray-700">
@@ -34,7 +31,7 @@ listPages.filter(item => {
     <a href={base} class="flex items-center group hover:hover:text-text" title="Rick and morty">
       <img src={`${base}/svg/location.svg`} class="w-9">
       <p class="font-bold text-xl sm:text-2xl ml-1">
-        Rick<span class="text-xs group-hover:text-[#fbf976]" > and </span>Morty
+        Rick<span class="text-xs group-hover:text-[#fbf976]"> and </span>Morty
       </p>
 
     </a>
