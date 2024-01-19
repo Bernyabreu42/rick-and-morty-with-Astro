@@ -1,6 +1,6 @@
 ---
 import type { Location } from '../types/Location'
-
+const base = import.meta.env.BASE_URL
 
   export interface Props {
     location: Location
@@ -31,7 +31,7 @@ import type { Location } from '../types/Location'
       </li>
     </ul>
   </div>
-  <a href={`/locations/${location.id}`} class="flex items-center justify-between gap-2 border px-2 border-gray-700 rounded-md bg-fondo">
+  <a href={`${base}/locations/${location.id}`} class="flex items-center justify-between gap-2 border px-2 border-gray-700 rounded-md bg-fondo">
     visit - {location.residents.length} residents
     <img src="/img/nave.png" alt="" class="w-8 h-8 p-1">
   </a>

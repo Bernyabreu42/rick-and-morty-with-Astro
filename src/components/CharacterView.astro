@@ -1,5 +1,7 @@
 ---
+
 import type { Character } from "../types/Character"
+const base = import.meta.env.BASE_URL
 
 export interface Props {
   character: Character
@@ -17,7 +19,7 @@ const statusColor = {
 
 ---
 
-<a  href={`/characters/${character.id}`}
+<a  href={`${base}/characters/${character.id}`}
 class={`relative block rounded-lg overflow-hidden shadow-sm border border-gray-700 hover:bg-fondo h-full ${tailwindClass}`}>
 
   <picture  class="relative aspect-square w-full h-auto">

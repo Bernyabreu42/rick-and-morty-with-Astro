@@ -1,5 +1,6 @@
 ---
 import SectionContainer from "./SectionContainer.astro";
+const base = import.meta.env.BASE_URL
 ---
 
 
@@ -14,7 +15,7 @@ import SectionContainer from "./SectionContainer.astro";
         Find your Favorite Characters in Any Dimension
       </p>
 
-      <a href="/characters" >
+      <a href={`${base}/characters`} >
         <input
 
           id="character"

@@ -1,8 +1,9 @@
+const base = import.meta.env.BASE_URL
 
 export default function Pagination({currentCharacterId}) {
 
-  const nextPage = currentCharacterId <= 825 ? `/characters/${currentCharacterId + 1}` : `/characters/${currentCharacterId - 1}`
-  const prevPage = currentCharacterId >= 2 ? `/characters/${currentCharacterId - 1}` : `/characters/${currentCharacterId + 1}`
+  const nextPage = currentCharacterId <= 825 ? `${base}/characters/${currentCharacterId + 1}` : `${base}/characters/${currentCharacterId - 1}`
+  const prevPage = currentCharacterId >= 2 ? `${base}/characters/${currentCharacterId - 1}` : `${base}/characters/${currentCharacterId + 1}`
 
   return (
     <div class=" flex items-center justify-between">
@@ -16,7 +17,7 @@ export default function Pagination({currentCharacterId}) {
           </svg>
         </a>
 
-        <a href={`/characters/${Math.floor(Math.random() * 826)}`} class="flex items-center border border-gray-700 p-3 text-xs sm:text-xl rounded-md hover:bg-gray-800" >
+        <a href={`${base}/characters/${Math.floor(Math.random() * 826)}`} class="flex items-center border border-gray-700 p-3 text-xs sm:text-xl rounded-md hover:bg-gray-800" >
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-infinity" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M9.828 9.172a4 4 0 1 0 0 5.656a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" />

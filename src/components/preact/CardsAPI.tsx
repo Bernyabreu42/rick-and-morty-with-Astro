@@ -4,6 +4,8 @@ import type { Location } from "../../types/Location"
 import type { Episode } from "../../types/Episode"
 import type { API } from "./Searcher"
 
+const base = import.meta.env.BASE_URL
+
 type Props = {
   character: Character | Location | Episode
   tipo: API
@@ -21,7 +23,7 @@ export default function CardsAPI({character, tipo}: Props) {
   if(tipo === 'character'  && 'status' in character){
     return (
       <li class='w-full p-1 hover:text-text '>
-      <a  href={`/characters/${character.id}`}
+      <a  href={`${base}/characters/${character.id}`}
 class={`relative block rounded-lg overflow-hidden shadow-sm border border-gray-700 hover:bg-fondo h-full`}>
 
   <picture  class="relative aspect-square w-full h-auto">
@@ -47,7 +49,7 @@ class={`relative block rounded-lg overflow-hidden shadow-sm border border-gray-7
   if(tipo === 'location' && 'type' in character && 'dimension' in character){
     return (
       <li id='locations' class='w-full border border-gray-700 p-2 rounded-md'>
-       <a href={`/locations/${character.id}`} class=' rounded-lg overflow-hidden flex flex-col gap-1'>
+       <a href={`${base}/locations/${character.id}`} class=' rounded-lg overflow-hidden flex flex-col gap-1'>
           <span class='text-xs text-[#fbf976]'>{character.type}</span>
           <span title={character.name} id='name-locations' class='text-lg font-semibold group-hover:hover:text-text truncate'>{character.name}</span>
           <span class='text-xs'>{character.dimension}</span>
@@ -60,7 +62,7 @@ class={`relative block rounded-lg overflow-hidden shadow-sm border border-gray-7
   if(tipo === 'episode' && 'characters' in character){
     return (
       <li id='episodes' class='w-full border border-gray-700 p-2 rounded-md '>
-        <a href={`/episodes/${character.id}`} class='rounded-lg overflow-hidden flex flex-col gap-1'>
+        <a href={`${base}/episodes/${character.id}`} class='rounded-lg overflow-hidden flex flex-col gap-1'>
           <span class='text-xs text-text'>{character.episode} - {character.air_date}</span>
           <span  title={character.name} id='name-episode' class='text-lg font-semibold truncate'>{character.name}</span>
           <time datetime={new Date(character.created).toLocaleDateString()} class="block text-xs text-gray-500">
